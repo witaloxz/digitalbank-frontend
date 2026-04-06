@@ -2,16 +2,16 @@ import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { toast } from "sonner";
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "https://digitalbank-backend.onrender.com/api/v1",
+  baseURL: import.meta.env.VITE_API_URL || "https://digitalbank-backend.onrender.com",
   headers: { "Content-Type": "application/json" },
 });
 
-const PUBLIC_ENDPOINTS = ["/auth/login", "/auth/register", "/auth/refresh"];
+const PUBLIC_ENDPOINTS = ["/api/v1/auth/login", "/api/v1/auth/register", "/api/v1/auth/refresh"];
 
 const isPublicEndpoint = (config: InternalAxiosRequestConfig) => {
   const { url, method } = config;
   const isPublic = PUBLIC_ENDPOINTS.some((endpoint) => url === endpoint);
-  const isRegistration = url === "/users" && method?.toLowerCase() === "post";
+  const isRegistration = url === "/api/v1/users" && method?.toLowerCase() === "post";
   return isPublic || isRegistration;
 };
 
@@ -42,7 +42,7 @@ api.interceptors.response.use(
         try {
           const refreshToken = localStorage.getItem("refresh_token");
           if (refreshToken) {
-            const response = await axios.post(`${api.defaults.baseURL}/auth/refresh`, { refreshToken });
+            const response = await axios.post(`${api.defaults.baseURL}/api/v1/auth/refresh`, { refreshToken });
             const { access_token } = response.data;
 
             localStorage.setItem("access_token", access_token);

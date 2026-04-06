@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { useAuth } from "@/context/AuthContext";
+import { api } from "@/lib/api";
 
 const registerSchema = z.object({
   name: z.string().min(3, { message: "Nome deve ter pelo menos 3 caracteres" }),
@@ -29,7 +29,6 @@ type RegisterFormValues = z.infer<typeof registerSchema>;
 const Register = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { register: registerUser } = useAuth();
   
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -51,11 +50,26 @@ const Register = () => {
     },
   });
 
+  // Função para formatar a data de YYYY-MM-DD para DD/MM/YYYY
+  const formatDateToBackend = (date: string): string => {
+    const [year, month, day] = date.split("-");
+    return `${day}/${month}/${year}`;
+  };
+
   const onSubmit = async (data: RegisterFormValues) => {
     setIsLoading(true);
 
     try {
-      await registerUser(data as any);
+      const formattedData = {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        cpf: data.cpf,
+        password: data.password,
+        dateOfBirth: formatDateToBackend(data.dateOfBirth),
+      };
+
+      await api.post("/api/v1/users", formattedData);
       toast.success("Conta criada com sucesso! Faça login.");
       navigate("/login");
     } catch (error: any) {

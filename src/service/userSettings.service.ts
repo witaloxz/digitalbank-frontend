@@ -39,14 +39,14 @@ export interface UserPreferences {
 
 export const userSettingsService = {
   getCurrentUser: () =>
-    api.get<UserProfile>("/users/me").then((res) => res.data),
+    api.get<UserProfile>("/api/v1/users/me").then((res) => res.data), 
 
   updateProfile: (data: UpdateProfileData) =>
-    api.put<UserProfile>("/users/me", data).then((res) => res.data),
+    api.put<UserProfile>("/api/v1/users/me", data).then((res) => res.data),
 
   updatePassword: (data: UpdatePasswordData) =>
-    api.put("/users/me/password", data),
+    api.put("/api/v1/users/me/password", data),
 
   updatePreferences: (preferences: UserPreferences) =>
-    api.put("/users/me/preferences", preferences),
+    api.put("/api/v1/users/me/preferences", preferences),
 };

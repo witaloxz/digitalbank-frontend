@@ -11,14 +11,14 @@ export interface Insurance {
 
 export const insuranceService = {
   requestLifeInsurance: (accountId: string, plan: string) =>
-    api.post(`/insurance/life/request?accountId=${accountId}`, { plan }),
+    api.post(`/api/v1/insurance/life/request?accountId=${accountId}`, { plan }),
 
   getPendingRequests: (page = 0, size = 10) =>
-    api.get<{ content: Insurance[]; totalPages: number }>(`/insurance/admin/pending?page=${page}&size=${size}`),
+    api.get<{ content: Insurance[]; totalPages: number }>(`/api/v1/insurance/admin/pending?page=${page}&size=${size}`),
 
   approveRequest: (id: string) =>
-    api.patch(`/insurance/admin/${id}/approve`),
+    api.patch(`/api/v1/insurance/admin/${id}/approve`),
 
   rejectRequest: (id: string) =>
-    api.patch(`/insurance/admin/${id}/reject`),
+    api.patch(`/api/v1/insurance/admin/${id}/reject`),
 };

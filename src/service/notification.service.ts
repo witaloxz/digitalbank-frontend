@@ -11,11 +11,11 @@ export interface Notification {
 
 export const notificationService = {
   getNotifications: (page = 0, size = 20) =>
-    api.get<{ content: Notification[]; totalElements: number }>(`/notifications?page=${page}&size=${size}`),
+    api.get<{ content: Notification[]; totalElements: number }>(`/api/v1/notifications?page=${page}&size=${size}`),
 
   getUnreadCount: () =>
-    api.get<number>("/notifications/unread/count"),
+    api.get<number>("/api/v1/notifications/unread/count"),
 
   markAllAsRead: () =>
-    api.patch("/notifications/mark-all-read"),
+    api.patch("/api/v1/notifications/mark-all-read"),
 };

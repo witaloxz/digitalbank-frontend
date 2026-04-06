@@ -42,29 +42,29 @@ export interface PendingLoan {
 
 export const loanService = {
   getLoansByAccount: (accountId: string, page = 0, size = 10) =>
-    api.get(`/loans/account/${accountId}?page=${page}&size=${size}`),
+    api.get(`/api/v1/loans/account/${accountId}?page=${page}&size=${size}`),
 
   getLoanSummary: (accountId: string) =>
-    api.get(`/loans/account/${accountId}/summary`),
+    api.get(`/api/v1/loans/account/${accountId}/summary`),
 
   requestLoan: (
     accountId: string,
     data: { name: string; amount: number; interestRate: number; termMonths: number }
   ) =>
-    api.post(`/loans/account/${accountId}/request`, data),
+    api.post(`/api/v1/loans/account/${accountId}/request`, data),
 
   getInstallments: (loanId: string) =>
-    api.get(`/loans/${loanId}/installments`),
+    api.get(`/api/v1/loans/${loanId}/installments`),
 
   payInstallment: (boletoCode: string) =>
-    api.post("/loans/installments/pay", { boletoCode }),
+    api.post("/api/v1/loans/installments/pay", { boletoCode }),
 
   getPendingLoans: (page = 0, size = 10) =>
-    api.get<{ content: PendingLoan[]; totalPages: number }>(`/loans/admin/pending?page=${page}&size=${size}`),
+    api.get<{ content: PendingLoan[]; totalPages: number }>(`/api/v1/loans/admin/pending?page=${page}&size=${size}`),
 
   approveLoan: (loanId: string) =>
-    api.patch(`/loans/admin/${loanId}/approve`),
+    api.patch(`/api/v1/loans/admin/${loanId}/approve`),
 
   rejectLoan: (loanId: string) =>
-    api.patch(`/loans/admin/${loanId}/reject`),
+    api.patch(`/api/v1/loans/admin/${loanId}/reject`),
 };

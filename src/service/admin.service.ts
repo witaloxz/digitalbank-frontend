@@ -63,25 +63,25 @@ export interface StatusDistribution {
 
 export const adminService = {
   getMonthlyUsers: (months: number = 6) =>
-    api.get<MonthlyData[]>(`/admin/stats/users-monthly?months=${months}`),
+    api.get<MonthlyData[]>(`/api/v1/admin/stats/users-monthly?months=${months}`),
 
   getMonthlyTransactions: (months: number = 6) =>
-    api.get<MonthlyData[]>(`/admin/stats/transactions-monthly?months=${months}`),
+    api.get<MonthlyData[]>(`/api/v1/admin/stats/transactions-monthly?months=${months}`),
 
   getMonthlyRevenue: (months: number = 6) =>
-    api.get<MonthlyData[]>(`/admin/stats/revenue-monthly?months=${months}`),
+    api.get<MonthlyData[]>(`/api/v1/admin/stats/revenue-monthly?months=${months}`),
 
   getStatusDistribution: () =>
-    api.get<StatusDistribution[]>("/admin/stats/status-distribution"),
+    api.get<StatusDistribution[]>("/api/v1/admin/stats/status-distribution"),
 
   getSettings: () =>
-    api.get<SystemSettings>("/admin/settings"),
+    api.get<SystemSettings>("/api/v1/admin/settings"),
 
   updateSettings: (settings: SystemSettings) =>
-    api.put("/admin/settings", settings),
+    api.put("/api/v1/admin/settings", settings),
 
   getStats: () =>
-    api.get<AdminStats>("/admin/stats"),
+    api.get<AdminStats>("/api/v1/admin/stats"),
 
   getUsers: (page: number = 0, size: number = 10, search?: string, filter?: string) => {
     const params: any = { page, size };
@@ -91,26 +91,26 @@ export const adminService = {
       else if (filter === "inactive") params.status = "INACTIVE";
       else if (filter === "admin") params.role = "ADMIN";
     }
-    return api.get<{ content: AdminUser[]; totalPages: number }>("/admin/users", { params });
+    return api.get<{ content: AdminUser[]; totalPages: number }>("/api/v1/admin/users", { params });
   },
 
   updateUserRole: (userId: string, role: "USER" | "ADMIN") =>
-    api.patch(`/admin/users/${userId}/role`, { role }),
+    api.patch(`/api/v1/admin/users/${userId}/role`, { role }),
 
   toggleUserStatus: (userId: string) =>
-    api.patch(`/admin/users/${userId}/toggle-status`),
+    api.patch(`/api/v1/admin/users/${userId}/toggle-status`),
 
   getTransactions: (page, size, search, status, type) => {
     const params: any = { page, size };
     if (search) params.search = search;
     if (status && status !== "all") params.status = status;
     if (type && type !== "all") params.type = type;
-    return api.get("/admin/transactions", { params });
+    return api.get("/api/v1/admin/transactions", { params });
   },
 
   updateTransactionStatus: (id, status) =>
-    api.patch(`/admin/transactions/${id}/status`, { status }),
+    api.patch(`/api/v1/admin/transactions/${id}/status`, { status }),
 
   reverseTransaction: (txId: string) =>
-    api.patch(`/admin/transactions/${txId}/reverse`),
+    api.patch(`/api/v1/admin/transactions/${txId}/reverse`),
 };

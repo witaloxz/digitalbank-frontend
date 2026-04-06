@@ -9,5 +9,5 @@ export interface RecentContact {
 
 export const contactService = {
   getRecentContacts: () =>
-    api.get<RecentContact[]>("/transfers/contacts/recent"),
+    api.get<RecentContact[]>("/api/v1/transfers/contacts/recent"),
 };

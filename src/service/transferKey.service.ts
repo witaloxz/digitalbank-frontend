@@ -8,11 +8,11 @@ export interface TransferKey {
 
 export const transferKeyService = {
   listKeys: (accountId: string) =>
-    api.get<TransferKey[]>(`/accounts/${accountId}/keys`),
+    api.get<TransferKey[]>(`/api/v1/accounts/${accountId}/keys`),
 
   createKey: (accountId: string, data: { type: string; value: string }) =>
-    api.post<TransferKey>(`/accounts/${accountId}/keys`, data),
+    api.post<TransferKey>(`/api/v1/accounts/${accountId}/keys`, data),
 
   deleteKey: (accountId: string, keyId: string) =>
-    api.delete(`/accounts/${accountId}/keys/${keyId}`),
+    api.delete(`/api/v1/accounts/${accountId}/keys/${keyId}`),
 };

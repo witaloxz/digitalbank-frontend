@@ -523,6 +523,7 @@ const ptBR = {
     },
 
     common: {
+      loading: "Carregando...",
       previous: "Anterior",
       next: "Próxima",
       page: "Página",

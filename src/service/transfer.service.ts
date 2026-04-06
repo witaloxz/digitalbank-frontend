@@ -11,11 +11,11 @@ export const transferService = {
     description: string;
   }) => {
     const idempotencyKey = uuidv4();
-    return api.post("/transfers", data, {
+    return api.post("/api/v1/transfers", data, {
       headers: { "Idempotency-Key": idempotencyKey },
     });
   },
 
   reverseTransfer: (transferId: string) =>
-    api.post(`/transfers/${transferId}/reverse`),
+    api.post(`/api/v1/transfers/${transferId}/reverse`),
 };

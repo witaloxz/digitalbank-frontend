@@ -24,20 +24,20 @@ export interface CardTransaction {
 
 export const cardService = {
   getMyCards: () =>
-    api.get<Card[]>("/cards"),
+    api.get<Card[]>("/api/v1/cards"),
 
   createCard: (data: { type: "DEBIT" | "CREDIT"; creditLimit?: number }) =>
-    api.post<Card>("/cards", data),
+    api.post<Card>("/api/v1/cards", data),
 
   blockCard: (cardId: string) =>
-    api.patch(`/cards/${cardId}/block`),
+    api.patch(`/api/v1/cards/${cardId}/block`),
 
   deleteCard: (cardId: string) =>
-    api.delete(`/cards/${cardId}`),
+    api.delete(`/api/v1/cards/${cardId}`),
 
   getCardSpending: (cardId: string) =>
-    api.get<CardSpending[]>(`/cards/${cardId}/spending`),
+    api.get<CardSpending[]>(`/api/v1/cards/${cardId}/spending`),
 
   getCardTransactions: (cardId: string) =>
-    api.get<CardTransaction[]>(`/cards/${cardId}/transactions`),
+    api.get<CardTransaction[]>(`/api/v1/cards/${cardId}/transactions`),
 };

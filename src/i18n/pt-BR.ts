@@ -23,6 +23,7 @@ const ptBR = {
 
   header: {
     searchPlaceholder: "Pesquisar algo",
+    searchPage: "Pesquisar",
     notifications: "Notificações",
     markAllRead: "Marcar todas como lidas",
     noNotifications: "Nenhuma notificação",
@@ -371,6 +372,10 @@ const ptBR = {
 
   settings: {
     title: "Configurações",
+    profileTab: "Perfil",
+    preferencesTab: "Preferências",
+    securityTab: "Segurança",
+    pixTab: "Chaves Pix",
     editProfile: "Editar Perfil",
     preferences: "Preferências",
     security: "Segurança",

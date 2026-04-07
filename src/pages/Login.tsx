@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { toast, useToast } from "@/hooks/use-toast";
+import { toast } from "@/hooks/use-toast";
 import { useAuth } from "@/context/AuthContext";
 
 const loginSchema = z.object({
@@ -39,27 +39,27 @@ const Login = () => {
   });
 
   const onSubmit = async (data: LoginFormValues) => {
-  setIsLoading(true);
+    setIsLoading(true);
 
-  try {
-    await login(data.email, data.password);
-    toast({
-      title: "Login realizado!",
-      variant: "default", 
-    });
-  } catch (error: any) {
-    const message =
-      error.response?.status === 401
-        ? t("login.invalidCredentials")
-        : t("login.error");
-    toast({
-      title: "Erro ao fazer login",
-      variant: "destructive",
-    });
-  } finally {
-    setIsLoading(false);
-  }
-};
+    try {
+      await login(data.email, data.password);
+      toast({
+        title: "Login realizado!",
+        variant: "default",
+      });
+      navigate("/dashboard");
+    } catch (error: any) {
+      toast({
+        title: "Erro ao fazer login",
+        description: error.response?.status === 401 
+          ? "E-mail ou senha inválidos" 
+          : "Ocorreu um erro ao tentar fazer login",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen flex">
@@ -100,7 +100,7 @@ const Login = () => {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">{t("login.password")}</Label>
-                <Link to="#" className="text-xs font-medium text-primary hover:underline">
+                <Link to="/forgot-password" className="text-xs font-medium text-primary hover:underline">
                   {t("login.forgotPassword")}
                 </Link>
               </div>
@@ -111,11 +111,13 @@ const Login = () => {
                   placeholder="••••••••"
                   {...register("password")}
                   disabled={isLoading}
+                  className="pr-10"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors z-10"
+                  tabIndex={-1}
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>

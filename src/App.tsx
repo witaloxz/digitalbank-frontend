@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from "./context/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import { AdminRoute } from "./components/AdminRoute"; // ← IMPORTE AQUI
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -50,13 +51,6 @@ const App = () => (
             <Route path="/maintenance" element={<Maintenance />} />
 
             <Route element={<ProtectedRoute />}>
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/admin/users" element={<AdminUsers />} />
-              <Route path="/admin/transactions" element={<AdminTransactions />} />
-              <Route path="/admin/settings" element={<AdminSettings />} />
-              <Route path="/admin/loans" element={<AdminLoans />} />
-              <Route path="/admin/insurance" element={<AdminInsurance />} />
-
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/dashboard/transactions" element={<Transactions />} />
               <Route path="/dashboard/transfer" element={<NewTransfer />} />
@@ -66,10 +60,19 @@ const App = () => (
               <Route path="/dashboard/services" element={<Services />} />
               <Route path="/dashboard/settings" element={<SettingsPage />} />
 
-              <Route path="/dashboard/services/life-insurance"element={<LifeInsurance />} />
+              <Route path="/dashboard/services/life-insurance" element={<LifeInsurance />} />
               <Route path="/dashboard/services/bill-payments" element={<BillPayments />} />
               <Route path="/dashboard/services/statements" element={<Statements />} />
               <Route path="/dashboard/services/support" element={<Support />} />
+            </Route>
+
+            <Route element={<AdminRoute />}>
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/users" element={<AdminUsers />} />
+              <Route path="/admin/transactions" element={<AdminTransactions />} />
+              <Route path="/admin/settings" element={<AdminSettings />} />
+              <Route path="/admin/loans" element={<AdminLoans />} />
+              <Route path="/admin/insurance" element={<AdminInsurance />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />

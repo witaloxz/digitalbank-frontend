@@ -50,10 +50,18 @@ const Register = () => {
     },
   });
 
-  // Função para formatar a data de YYYY-MM-DD para DD/MM/YYYY
   const formatDateToBackend = (date: string): string => {
     const [year, month, day] = date.split("-");
     return `${day}/${month}/${year}`;
+  };
+
+  const formatPhoneToBackend = (phone: string): string => {
+    let cleaned = phone.replace(/[^\d+]/g, '');
+    
+    if (!cleaned.startsWith('+')) {
+      cleaned = '+' + cleaned;
+    }
+    return cleaned;
   };
 
   const onSubmit = async (data: RegisterFormValues) => {
@@ -63,7 +71,7 @@ const Register = () => {
       const formattedData = {
         name: data.name,
         email: data.email,
-        phone: data.phone,
+        phone: formatPhoneToBackend(data.phone), 
         cpf: data.cpf,
         password: data.password,
         dateOfBirth: formatDateToBackend(data.dateOfBirth),
@@ -133,6 +141,7 @@ const Register = () => {
               <Label htmlFor="phone">{t("register.phone")}</Label>
               <Input
                 id="phone"
+                type="tel"
                 placeholder="+55 11 99999-9999"
                 {...register("phone")}
                 disabled={isLoading}

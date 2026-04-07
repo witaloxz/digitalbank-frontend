@@ -5,7 +5,7 @@ class NotificationSocket {
   private client: Client | null = null;
 
   private getBaseUrl(): string {
-    return import.meta.env.VITE_API_URL || "https://digitalbank-backend.onrender.com/api/v1";
+    return import.meta.env.VITE_API_URL || "https://digitalbank-backend.onrender.com";
   }
 
   connect(userId: string, onMessage: (notification: any) => void) {

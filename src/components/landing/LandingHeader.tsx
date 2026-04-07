@@ -1,12 +1,41 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Landmark, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight, Landmark, Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const LandingHeader = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const closeMobileMenu = () => setMobileMenuOpen(false);
+
+  useEffect(() => {
+    const isMobile = window.innerWidth < 768;
+    
+    if (mobileMenuOpen && isMobile) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    const handleResize = () => {
+      const isMobileNow = window.innerWidth < 768;
+      if (!isMobileNow) {
+        document.body.style.overflow = "unset";
+        if (mobileMenuOpen) {
+          setMobileMenuOpen(false);
+        }
+      } else if (mobileMenuOpen) {
+        document.body.style.overflow = "hidden";
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    
+    return () => {
+      document.body.style.overflow = "unset";
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [mobileMenuOpen]);
 
   const navLinks = [
     { href: "#features", label: "Recursos" },
@@ -16,7 +45,7 @@ const LandingHeader = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/95 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-border/60 bg-primary shadow-lg">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <motion.div
           initial={{ opacity: 0, x: -18 }}
@@ -24,10 +53,10 @@ const LandingHeader = () => {
           transition={{ duration: 0.45 }}
           className="flex items-center gap-3"
         >
-          <div className="rounded-xl bg-primary/10 p-2.5">
-            <Landmark className="h-6 w-6 text-primary" />
+          <div className="rounded-xl bg-white/10 p-2.5">
+            <Landmark className="h-6 w-6 text-white" />
           </div>
-          <span className="text-xl font-extrabold tracking-tight">
+          <span className="text-xl font-extrabold tracking-tight text-white">
             BankDash.
           </span>
         </motion.div>
@@ -42,7 +71,7 @@ const LandingHeader = () => {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-muted-foreground transition hover:text-foreground"
+              className="text-sm text-white/80 transition hover:text-white"
             >
               {link.label}
             </a>
@@ -55,85 +84,99 @@ const LandingHeader = () => {
           transition={{ duration: 0.45, delay: 0.15 }}
           className="hidden items-center gap-3 md:flex"
         >
-          <Link to="/login">
-            <Button variant="ghost">Entrar</Button>
-          </Link>
           <Link to="/register">
-            <Button>Criar conta</Button>
+            <Button size="lg" className="gap-2 bg-white text-indigo-900 hover:bg-white/90">
+              Criar conta agora
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+          </Link>
+
+          <Link to="/login">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="border-2 border-white bg-transparent text-white hover:bg-white/10 hover:text-white"
+            >
+              Já tenho conta
+            </Button>
           </Link>
         </motion.div>
 
         <button
           type="button"
           onClick={() => setMobileMenuOpen(true)}
-          className="rounded-xl border border-border bg-card p-2 md:hidden"
+          className="rounded-xl border border-white/20 bg-white/10 p-2 md:hidden"
           aria-label="Abrir menu"
         >
-          <Menu className="h-5 w-5 text-foreground" />
+          <Menu className="h-5 w-5 text-white" />
         </button>
       </div>
 
       <AnimatePresence>
         {mobileMenuOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={closeMobileMenu}
-              className="fixed inset-0 z-40 bg-background/60 backdrop-blur-sm md:hidden"
-            />
-
-            <motion.div
-              initial={{ opacity: 0, x: 80 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 80 }}
-              transition={{ duration: 0.25 }}
-              className="fixed right-0 top-0 z-50 h-full w-[85%] max-w-sm border-l border-border bg-background p-6 shadow-xl md:hidden"
-            >
-              <div className="mb-8 flex items-center justify-between">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 bg-primary md:hidden"
+          >
+            <div className="flex h-full flex-col">
+              <div className="flex items-center justify-between border-b border-white/20 px-6 py-4">
                 <div className="flex items-center gap-3">
-                  <div className="rounded-xl bg-primary/10 p-2">
-                    <Landmark className="h-5 w-5 text-primary" />
+                  <div className="rounded-xl bg-white/10 p-2.5">
+                    <Landmark className="h-6 w-6 text-white" />
                   </div>
-                  <span className="font-bold">BankDash.</span>
+                  <span className="text-xl font-extrabold tracking-tight text-white">
+                    BankDash.
+                  </span>
                 </div>
 
                 <button
                   type="button"
                   onClick={closeMobileMenu}
-                  className="rounded-xl border border-border bg-card p-2"
+                  className="rounded-xl border border-white/20 bg-white/10 p-2"
                   aria-label="Fechar menu"
                 >
-                  <X className="h-5 w-5 text-foreground" />
+                  <X className="h-5 w-5 text-white" />
                 </button>
               </div>
 
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-1 flex-col items-center justify-center gap-6 px-6">
                 {navLinks.map((link) => (
                   <a
                     key={link.href}
                     href={link.href}
                     onClick={closeMobileMenu}
-                    className="rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground"
+                    className="text-center text-2xl font-medium text-white transition-colors hover:text-white/80"
                   >
                     {link.label}
                   </a>
                 ))}
               </div>
+              
+              <div className="border-t border-white/20 px-6 py-6">
+                <div className="flex flex-col gap-3">
+                  <Link to="/register" onClick={closeMobileMenu}>
+                    <Button size="lg" className="w-full gap-2 bg-white text-indigo-900 hover:bg-white/90">
+                      Criar conta agora
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </Link>
 
-              <div className="mt-8 flex flex-col gap-3">
-                <Link to="/login" onClick={closeMobileMenu}>
-                  <Button variant="outline" className="w-full">
-                    Entrar
-                  </Button>
-                </Link>
-                <Link to="/register" onClick={closeMobileMenu}>
-                  <Button className="w-full">Criar conta</Button>
-                </Link>
+                  <Link to="/login" onClick={closeMobileMenu}>
+                    <Button 
+                      size="lg" 
+                      variant="outline" 
+                      className="w-full border-2 border-white bg-transparent text-white hover:bg-white/10 hover:text-white"
+                    >
+                      Já tenho conta
+                    </Button>
+                  </Link>
+                </div>
               </div>
-            </motion.div>
-          </>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </header>

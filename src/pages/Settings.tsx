@@ -5,7 +5,6 @@ import { Loader2, User, Settings, Shield, Key } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { userSettingsService, UserProfile } from "@/service/userSettings.service";
-import { toast } from "sonner";
 
 import { EditProfileTab } from "@/components/settings/EditProfileTab";
 import { PreferencesTab } from "@/components/settings/PreferencesTab";

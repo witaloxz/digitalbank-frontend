@@ -80,11 +80,11 @@ const Features = () => {
           >
             <Card className="rounded-3xl border-border">
               <CardContent className="p-6">
-                <div className="mb-4 inline-flex rounded-2xl bg-primary/10 p-3">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10">
                   <feature.icon className="h-6 w-6 text-primary" />
                 </div>
-                <h3 className="mb-2 text-lg font-semibold">{feature.title}</h3>
-                <p className="text-sm leading-6 text-muted-foreground">
+                <h3 className="mb-2 mt-4 line-clamp-2 min-h-[3.5rem] text-lg font-semibold">{feature.title}</h3>
+                <p className="line-clamp-3 min-h-[4.5rem] text-sm leading-6 text-muted-foreground">
                   {feature.description}
                 </p>
               </CardContent>

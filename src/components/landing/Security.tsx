@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Lock, Smartphone, Shield, BarChart3, Globe } from "lucide-react";
+import { Lock, Smartphone, BarChart3, Globe } from "lucide-react";
 import { Reveal } from "./Reveal";
 
 const resources = [
@@ -13,7 +13,7 @@ const resources = [
     icon: Lock,
     title: "Segurança reforçada",
     description:
-      "Camadas extras de proteção para manter dados e movimentações mais seguros.",
+      "Camadas extras de proteção para manter dados e movimentações mais seguras.",
   },
   {
     icon: BarChart3,
@@ -77,7 +77,7 @@ const Security = () => {
                 whileHover={{ x: 6 }}
                 className="flex gap-4 rounded-2xl border border-border bg-background p-4"
               >
-                <div className="mt-1 rounded-xl bg-primary/10 p-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10">
                   <resource.icon className="h-5 w-5 text-primary" />
                 </div>
                 <div>
@@ -100,7 +100,7 @@ const Security = () => {
           className="rounded-[2rem] border border-border bg-background p-8 shadow-sm"
         >
           <div className="mb-6 flex items-center gap-3">
-            <div className="rounded-2xl bg-primary/10 p-3">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10">
               <Lock className="h-6 w-6 text-primary" />
             </div>
             <div>

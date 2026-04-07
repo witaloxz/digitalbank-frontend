@@ -96,6 +96,7 @@ const ptBR = {
     errorLoad: "Erro ao carregar dados",
     user: "Usuário",
     noTransactions: "Nenhuma transação recente",
+    noCards: "Nenhum cartão disponível",
   },
 
   transactionsPage: {

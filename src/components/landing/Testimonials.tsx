@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Reveal } from "./Reveal";
+import { User, Quote } from "lucide-react";
 
 const testimonials = [
   {
@@ -66,19 +67,36 @@ const Testimonials = () => {
             key={testimonial.name}
             variants={fadeUp}
             whileHover={{ y: -8 }}
+            className="h-full"
           >
-            <Card className="rounded-3xl border-border">
-              <CardContent className="p-6">
-                <p className="mb-6 text-sm leading-7 text-muted-foreground">
+            <Card className="flex h-full flex-col rounded-3xl border-border">
+              <CardContent className="flex flex-1 flex-col p-6">
+                {/* Ícone de aspas no topo */}
+                <div className="mb-4">
+                  <Quote className="h-8 w-8 text-primary/40" />
+                </div>
+                
+                {/* Texto do depoimento */}
+                <p className="mb-6 flex-1 text-sm leading-7 text-muted-foreground">
                   “{testimonial.text}”
                 </p>
-                <div>
-                  <p className="font-semibold text-foreground">
-                    {testimonial.name}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {testimonial.role}
-                  </p>
+                
+                {/* Container do usuário com avatar e informações */}
+                <div className="flex items-center gap-3 border-t border-border pt-4">
+                  {/* Avatar do usuário */}
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                    <User className="h-5 w-5 text-primary" />
+                  </div>
+                  
+                  {/* Informações do usuário */}
+                  <div>
+                    <p className="font-semibold text-foreground">
+                      {testimonial.name}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {testimonial.role}
+                    </p>
+                  </div>
                 </div>
               </CardContent>
             </Card>

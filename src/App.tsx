@@ -4,7 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from "./context/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
-import { AdminRoute } from "./components/AdminRoute"; // ← IMPORTE AQUI
+import { AdminRoute } from "./components/AdminRoute"; 
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";

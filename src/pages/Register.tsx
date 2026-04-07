@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Landmark, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -32,10 +32,12 @@ const Register = () => {
   
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [cpfDisplay, setCpfDisplay] = useState("");
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
@@ -58,10 +60,41 @@ const Register = () => {
   const formatPhoneToBackend = (phone: string): string => {
     let cleaned = phone.replace(/[^\d+]/g, '');
     
+    // Se não tiver + no início, adiciona
     if (!cleaned.startsWith('+')) {
       cleaned = '+' + cleaned;
     }
+    
     return cleaned;
+  };
+
+  const formatCpfToBackend = (cpf: string): string => {
+    return cpf.replace(/\D/g, '');
+  };
+
+  const applyCpfMask = (value: string): string => {
+    const cleaned = value.replace(/\D/g, '');
+    let formatted = cleaned;
+    if (cleaned.length <= 3) {
+      formatted = cleaned;
+    } else if (cleaned.length <= 6) {
+      formatted = `${cleaned.slice(0, 3)}.${cleaned.slice(3)}`;
+    } else if (cleaned.length <= 9) {
+      formatted = `${cleaned.slice(0, 3)}.${cleaned.slice(3, 6)}.${cleaned.slice(6)}`;
+    } else {
+      formatted = `${cleaned.slice(0, 3)}.${cleaned.slice(3, 6)}.${cleaned.slice(6, 9)}-${cleaned.slice(9, 11)}`;
+    }
+    
+    return formatted;
+  };
+
+  const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const rawValue = e.target.value;
+    const maskedValue = applyCpfMask(rawValue);
+    setCpfDisplay(maskedValue);
+    
+    const cleanCpf = rawValue.replace(/\D/g, '');
+    setValue("cpf", cleanCpf);
   };
 
   const onSubmit = async (data: RegisterFormValues) => {
@@ -71,8 +104,8 @@ const Register = () => {
       const formattedData = {
         name: data.name,
         email: data.email,
-        phone: formatPhoneToBackend(data.phone), 
-        cpf: data.cpf,
+        phone: formatPhoneToBackend(data.phone),
+        cpf: formatCpfToBackend(data.cpf),
         password: data.password,
         dateOfBirth: formatDateToBackend(data.dateOfBirth),
       };
@@ -168,9 +201,12 @@ const Register = () => {
               <Label htmlFor="cpf">{t("register.cpf")}</Label>
               <Input
                 id="cpf"
+                type="text"
                 placeholder="000.000.000-00"
-                {...register("cpf")}
+                value={cpfDisplay}
+                onChange={handleCpfChange}
                 disabled={isLoading}
+                maxLength={14}
               />
               {errors.cpf && (
                 <p className="text-xs font-medium text-destructive">{errors.cpf.message}</p>

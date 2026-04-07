@@ -60,7 +60,6 @@ const Register = () => {
   const formatPhoneToBackend = (phone: string): string => {
     let cleaned = phone.replace(/[^\d+]/g, '');
     
-    // Se não tiver + no início, adiciona
     if (!cleaned.startsWith('+')) {
       cleaned = '+' + cleaned;
     }
